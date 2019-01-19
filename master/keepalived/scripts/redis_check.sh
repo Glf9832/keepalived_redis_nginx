@@ -1,7 +1,7 @@
 #!/bin/bash
 ###/etc/keepalived/scripts/redis_check.sh
 
-ALIVE=`/opt/redis/bin/redis-cli PING`
+ALIVE=`/usr/local/redis/bin/redis-cli -h localhost -p 6379 PING`
 LOGFILE="/var/log/keepalived/keepalived-redis-check.log"
 pid=$$
 
