@@ -16,6 +16,15 @@ make
 make install
 ```
 
+设置keepalived服务
+```
+cp keepalived/etc/init.d/keepalived /etc/init.d/
+cp keepalived/etc/sysconfig/keepalived /etc/sysconfig/keepalived
+
+systemctl start keepalived
+systemctl enable keepalived
+```
+
 ### redis install
 ```bash
 tar -xvf redis-4.0.12.tar.gz
@@ -23,6 +32,34 @@ cd redis-4.0.12
 mv redis.conf /usr/local/redis/
 mv sentinel.conf /usr/local/redis/
 ln -s /usr/local/redis/bin/redis-cli /usr/bin/redis-cli
+```
+
+设置redis服务
+```bash
+vim /usr/lib/systemd/system/redis.service
+```
+
+```vim
+[Unit]
+Description=Redis
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+# Type=forking
+PIDFile=/usr/local/redis.pid
+ExecStart=/usr/local/redis/bin/redis-server /usr/local/redis/redis.conf
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```
+systemctl daemon-reload
+systemctl start redis
+systemctl enable redis
 ```
 
 ### vimplus install
@@ -63,6 +100,7 @@ ln -s /usr/local/python3.6.8/bin/virtualenv /usr/bin/virtualenv
 yum install epel-release -y
 yum install nginx -y
 systemctl start nginx
+systemctl enable nginx
 ```
 
 
@@ -97,8 +135,9 @@ mkdir /var/log/keepalived
 ```bash
 uwsgi --wsgi-file manage.py --callable app --processes 4 --threads 2 --socket localhost:9000 --daemonize uwsgi.log
 systemctl restart nginx
-/usr/local/redis/bin/redis-server /usr/local/redis/redis.conf
-/usr/local/keepalived/sbin/keepalived -f /etc/keepalived/keepalived.conf
-
+# /usr/local/redis/bin/redis-server /usr/local/redis/redis.conf
+systemctl restart redis
+# /usr/local/keepalived/sbin/keepalived -f /etc/keepalived/keepalived.conf
+systemctl restart keepalived
 ```
 
