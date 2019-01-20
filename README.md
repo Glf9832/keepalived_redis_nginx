@@ -95,6 +95,13 @@ ln -s /usr/local/python3.6.8/bin/python3 /usr/bin/python3
 ln -s /usr/local/python3.6.8/bin/virtualenv /usr/bin/virtualenv
 ```
 
+### supervisor install
+```bash
+yum install python-pip -y
+pip install supervisor
+vim /usr/lib/systemd/system/supervisord.service
+```
+
 ### nginx install
 ```bash
 yum install epel-release -y
@@ -139,5 +146,8 @@ systemctl restart nginx
 systemctl restart redis
 # /usr/local/keepalived/sbin/keepalived -f /etc/keepalived/keepalived.conf
 systemctl restart keepalived
+
+
+systemctl start supervisord
 ```
 
