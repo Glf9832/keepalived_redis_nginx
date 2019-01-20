@@ -16,7 +16,7 @@ make
 make install
 ```
 
-设置keepalived服务
+setup keepalived service
 ```
 cp keepalived/etc/init.d/keepalived /etc/init.d/
 cp keepalived/etc/sysconfig/keepalived /etc/sysconfig/keepalived
@@ -34,7 +34,7 @@ mv sentinel.conf /usr/local/redis/
 ln -s /usr/local/redis/bin/redis-cli /usr/bin/redis-cli
 ```
 
-设置redis服务
+setup redis service
 ```bash
 vim /usr/lib/systemd/system/redis.service
 ```
