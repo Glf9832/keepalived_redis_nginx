@@ -46,7 +46,7 @@ After=syslog.target network.target remote-fs.target nss-lookup.target
 
 [Service]
 # Type=forking
-PIDFile=/usr/local/redis.pid
+PIDFile=/var/run/redis.pid
 ExecStart=/usr/local/redis/bin/redis-server /usr/local/redis/redis.conf
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
