@@ -95,6 +95,30 @@ ln -s /usr/local/python3.6.8/bin/python3 /usr/bin/python3
 ln -s /usr/local/python3.6.8/bin/virtualenv /usr/bin/virtualenv
 ```
 
+Or this way
+
+```bash
+#!/bin/bash
+
+# install-python3.sh
+# package/rpm_python/*.rpm
+# package/Python-3.6.8.tar.xz
+
+rpm -Uvh ./package/rpm_python/*.rpm
+tar -xvf ./package/Python-3.6.8.tar.xz
+cd Python-3.6.8
+./configure --prefix=/usr/local/python3.6.8
+vi Modules/Setup
+make
+make install
+cd ../package
+/usr/local/python3.6.8/bin/pip3 install virtualenv-16.2.0-py2.py3-none-any.whl
+ln -s /usr/local/python3.6.8/bin/python3 /usr/bin/python3
+ln -s /usr/local/python3.6.8/bin/virtualenv /usr/bin/virtualenv
+cd ../
+rm -rf Python-3.6.8
+```
+
 ### supervisor install
 ```bash
 yum install python-pip -y
