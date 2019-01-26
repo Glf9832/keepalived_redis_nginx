@@ -64,25 +64,6 @@ systemctl start redis
 systemctl enable redis
 ```
 
-### vimplus install
-update to vim8.0
-```bash
-rpm -Uvh http://mirror.ghettoforge.org/distributions/gf/gf-release-latest.gf.el7.noarch.rpm
-rpm --import http://mirror.ghettoforge.org/distributions/gf/RPM-GPG-KEY-gf.el7
-yum -y remove vim-minimal vim-common vim-enhanced
-yum -y --enablerepo=gf-plus install vim-enhanced
-```
-
-```bash
-unzip vim.zip
-cd vim
-mv vimrc ~/.vimrc
-mv vimrc.local ~/.vimrc.local
-cd ..
-mv vim ~/.vim
-mv ~/.vim/plugged/YouCompleteMe/ ~/.vim/plugged/YouCompleteMe.bak
-```
-
 ### python3 install
 ```bash
 yum install  bzip2-devel ncurses-devel sqlite-devel gdbm-devel xz-devel tk-devel readline-devel openssl-devel -y
@@ -175,5 +156,26 @@ systemctl restart keepalived
 
 
 systemctl start supervisord
+```
+
+## Other install
+
+### vimplus install
+update to vim8.0
+```bash
+rpm -Uvh http://mirror.ghettoforge.org/distributions/gf/gf-release-latest.gf.el7.noarch.rpm
+rpm --import http://mirror.ghettoforge.org/distributions/gf/RPM-GPG-KEY-gf.el7
+yum -y remove vim-minimal vim-common vim-enhanced
+yum -y --enablerepo=gf-plus install vim-enhanced
+```
+
+```bash
+unzip vim.zip
+cd vim
+mv vimrc ~/.vimrc
+mv vimrc.local ~/.vimrc.local
+cd ..
+mv vim ~/.vim
+mv ~/.vim/plugged/YouCompleteMe/ ~/.vim/plugged/YouCompleteMe.bak
 ```
 
