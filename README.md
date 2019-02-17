@@ -118,7 +118,6 @@ systemctl enable nginx
 
 or this way
 ```bash
-yum install  bzip2-devel ncurses-devel sqlite-devel gdbm-devel xz-devel tk-devel readline-devel openssl-devel -y
 yum install -y gcc gcc-c++
 
 tar -xvf pcre-8.42.tar.gz
@@ -131,6 +130,7 @@ make install
 ```
 
 ```bash
+mkdir /var/run/nginx
 vim /usr/lib/systemd/system/nginx.service
 ```
 
