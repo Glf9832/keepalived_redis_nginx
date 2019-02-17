@@ -1,0 +1,16 @@
+[Unit]
+Description=uWSGI web server
+After=syslog.target
+
+[Service]
+ExecStart=/home/efsbk/tmenv/bin/uwsgi --ini /home/efsbk/web/uwsgi.ini
+# Requires systemd version 211 or newer
+WorkingDirectory=/home/efsbk/web
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
