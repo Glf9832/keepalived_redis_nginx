@@ -44,16 +44,14 @@ vim /usr/lib/systemd/system/redis.service
 
 ```vim
 [Unit]
-Description=Redis
-After=syslog.target network.target remote-fs.target nss-lookup.target
+Description=Redis In-Memory Data Store
+After=network.target
 
 [Service]
-# Type=forking
-PIDFile=/var/run/redis.pid
+PIDFile=/var/run/redis/redis_6379.pid
 ExecStart=/usr/local/redis/bin/redis-server /usr/local/redis/redis.conf
-ExecReload=/bin/kill -s HUP $MAINPID
-ExecStop=/bin/kill -s QUIT $MAINPID
-PrivateTmp=true
+ExecStop=/usr/local/redis/bin/redis-cli shutdown
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
