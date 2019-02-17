@@ -31,6 +31,7 @@ systemctl enable keepalived
 ```bash
 tar -xvf redis-4.0.12.tar.gz
 cd redis-4.0.12
+make PREFIX=/usr/local/redis install
 mv redis.conf /usr/local/redis/
 mv sentinel.conf /usr/local/redis/
 ln -s /usr/local/redis/bin/redis-cli /usr/bin/redis-cli
@@ -115,6 +116,52 @@ yum install epel-release -y
 yum install nginx -y
 systemctl start nginx
 systemctl enable nginx
+```
+
+or this way
+```bash
+yum install  bzip2-devel ncurses-devel sqlite-devel gdbm-devel xz-devel tk-devel readline-devel openssl-devel -y
+yum install -y gcc gcc-c++
+
+tar -xvf pcre-8.42.tar.gz
+tar -xvf zlib-1.2.11.tar.gz
+tar -xvf nginx-1.14.2.tar.gz
+
+./configure --sbin-path=/usr/local/sbin/nginx --conf-path=/etc/nginx/nginx.conf --pid-path=/var/run/nginx/nginx.pid --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --with-pcre=../pcre-8.42 --with-zlib=../zlib-1.2.11 --with-http_ssl_module --with-stream
+make 
+make install
+```
+
+```bash
+vim /usr/lib/systemd/system/nginx.service
+```
+
+```vim
+[Unit]
+Description=The nginx HTTP and reverse proxy server
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/nginx/nginx.pid
+# Nginx will fail to start if /run/nginx.pid already exists but has the wrong
+# SELinux context. This might happen when running `nginx -t` from the cmdline.
+# https://bugzilla.redhat.com/show_bug.cgi?id=1268621
+ExecStartPre=/usr/bin/rm -f /var/run/nginx/nginx.pid
+ExecStartPre=/usr/local/sbin/nginx -t
+ExecStart=/usr/local/sbin/nginx
+ExecReload=/bin/kill -s HUP $MAINPID
+KillSignal=SIGQUIT
+TimeoutStopSec=5
+KillMode=process
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+systemctl start nginx
 ```
 
 
