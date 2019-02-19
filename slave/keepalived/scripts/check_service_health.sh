@@ -8,13 +8,14 @@ HOSTADDRESS=$(ifconfig eth0 | grep -w "inet" | awk '{print $2}')
 curl_nginx=$(curl -LI http://$HOSTADDRESS -o /dev/null -w '%{http_code}\n' -s)
 curl_uwsgi=$(curl -LI http://localhost:8000 -o /dev/null -w '%{http_code}\n' -s)
 
-if [ $curl_nginx != 200 ]; then
-    echo "`date +'%Y-%m-%d %H:%M:%S'`|$pid|state:[check] Failed: $curl_nginx " >> $LOGFILE 2>&1
-    exit 1
-fi
 
 if [ $curl_uwsgi != 200 ]; then
     echo "`date +'%Y-%m-%d %H:%M:%S'`|$pid|state:[check] Failed: $curl_uwsgi " >> $LOGFILE 2>&1
+    exit 1
+fi
+
+if [ $curl_nginx != 200 ]; then
+    echo "`date +'%Y-%m-%d %H:%M:%S'`|$pid|state:[check] Failed: $curl_nginx " >> $LOGFILE 2>&1
     exit 1
 fi
 

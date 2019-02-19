@@ -13,8 +13,8 @@ case $STATE in
                   echo -e "state: $3 \naction: start nginx" > /var/run/keepalive.$1.$2.state
                   exit 0
                   ;;
-        "BACKUP") systemctl stop nginx
-                  echo -e "state: $3 \naction: stop nginx" > /var/run/keepalive.$1.$2.state
+        "BACKUP") systemctl start nginx
+                  echo -e "state: $3 \naction: start nginx" > /var/run/keepalive.$1.$2.state
                   exit 0
                   ;;
         "FAULT")  systemctl stop nginx
