@@ -48,7 +48,7 @@ Description=Redis In-Memory Data Store
 After=network.target
 
 [Service]
-PIDFile=/var/run/redis/redis_6379.pid
+PIDFile=/var/run/redis_6379.pid
 ExecStart=/usr/local/redis/bin/redis-server /usr/local/redis/redis.conf
 ExecStop=/usr/local/redis/bin/redis-cli shutdown
 Restart=always
@@ -118,13 +118,13 @@ systemctl enable nginx
 
 or this way
 ```bash
-yum install -y gcc gcc-c++
+yum install -y gcc gcc-c++ openssl openssl-devel
 
 tar -xvf pcre-8.42.tar.gz
 tar -xvf zlib-1.2.11.tar.gz
 tar -xvf nginx-1.14.2.tar.gz
 
-./configure --sbin-path=/usr/local/sbin/nginx --conf-path=/etc/nginx/nginx.conf --pid-path=/var/run/nginx/nginx.pid --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --with-pcre=../pcre-8.42 --with-zlib=../zlib-1.2.11 --with-http_ssl_module --with-stream
+./configure --sbin-path=/usr/local/sbin/nginx --conf-path=/etc/nginx/nginx.conf --pid-path=/var/run/nginx.pid --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --with-pcre=../pcre-8.42 --with-zlib=../zlib-1.2.11 --with-http_ssl_module --with-stream
 make 
 make install
 ```
@@ -141,11 +141,8 @@ After=network.target remote-fs.target nss-lookup.target
 
 [Service]
 Type=forking
-PIDFile=/var/run/nginx/nginx.pid
-# Nginx will fail to start if /run/nginx.pid already exists but has the wrong
-# SELinux context. This might happen when running `nginx -t` from the cmdline.
-# https://bugzilla.redhat.com/show_bug.cgi?id=1268621
-ExecStartPre=/usr/bin/rm -f /var/run/nginx/nginx.pid
+PIDFile=/var/run/nginx.pid
+ExecStartPre=/usr/bin/rm -f /var/run/nginx.pid
 ExecStartPre=/usr/local/sbin/nginx -t
 ExecStart=/usr/local/sbin/nginx
 ExecReload=/bin/kill -s HUP $MAINPID
