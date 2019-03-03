@@ -36,17 +36,14 @@ redis_to_slave() {
 
     # echo $(log "Redis info replication : ")
     # $REDISCLI info replication >> $LOGFILE  2>&1
+    local redis_role=$($REDISCLI info replication |grep role |awk -F: '{print $2}')
+    log "[REDIS] Redis current role: $redis_role"
 
     log "[REDIS] Redis data rsync to local from $host"
 
     log "[REDIS] Wait $sleep_time sec for data sync from $host"
     sleep $sleep_time
     log "[REDIS] Redis data rsync from $host ok"
-
-    local redis_role=$($REDISCLI info replication |grep role |awk -F: '{print $2}')
-    local redis_master_status=$($REDISCLI info replication |grep master_link_status |awk -F: '{print $2}')
-    log "[REDIS] Redis current role: $redis_role"
-    log "[REDIS] Redis master status: $redis_master_status"
 }
 
 redis_to_master() {
