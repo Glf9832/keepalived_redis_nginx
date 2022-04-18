@@ -130,7 +130,6 @@ make install
 ```
 
 ```bash
-mkdir /var/run/nginx
 vim /usr/lib/systemd/system/nginx.service
 ```
 
@@ -141,8 +140,6 @@ After=network.target remote-fs.target nss-lookup.target
 
 [Service]
 Type=forking
-PIDFile=/var/run/nginx.pid
-ExecStartPre=/usr/bin/rm -f /var/run/nginx.pid
 ExecStartPre=/usr/local/sbin/nginx -t
 ExecStart=/usr/local/sbin/nginx
 ExecReload=/bin/kill -s HUP $MAINPID
