@@ -65,7 +65,7 @@ systemctl enable redis
 
 ### python3 install
 ```bash
-yum install  bzip2-devel ncurses-devel sqlite-devel gdbm-devel xz-devel tk-devel readline-devel openssl-devel hdf5-devel -y
+yum install  bzip2-devel ncurses-devel sqlite-devel gdbm-devel xz-devel tk-devel readline-devel openssl-devel hdf5-devel libffi-devel -y
 tar -xvf Python-3.6.8.tar.xz
 cd Python-3.6.8
 ./configure --prefix=/usr/local/python3.6.8
