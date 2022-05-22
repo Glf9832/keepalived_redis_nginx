@@ -66,15 +66,13 @@ systemctl enable redis
 ### python3 install
 ```bash
 yum install  bzip2-devel ncurses-devel sqlite-devel gdbm-devel xz-devel tk-devel readline-devel openssl-devel hdf5-devel libffi-devel -y
-tar -xvf Python-3.6.8.tar.xz
-cd Python-3.6.8
-./configure --prefix=/usr/local/python3.6.8
+tar -xvf Python-3.9.9.tar.xz
+cd Python-3.9.9
+./configure --prefix=/usr/local/python3.9.9
 vim Modules/Setup
 make
 make install
-/usr/local/python3.6.8/bin/pip3 install virtualenv
-ln -s /usr/local/python3.6.8/bin/python3 /usr/bin/python3
-ln -s /usr/local/python3.6.8/bin/virtualenv /usr/bin/virtualenv
+ln -s /usr/local/python3.9.9/bin/python3 /usr/local/bin/python3
 ```
 
 Or this way
